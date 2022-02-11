@@ -9,7 +9,8 @@ class RenderableComponent;
 class ObserverComponent;
 class IRenderer;
 class ILogicSolver;
-
+class ImGuiRenderer;
+class IGUIPainter;
 /// <summary>
 /// Encapsulates large amount of scenary data.
 /// Entities,components....
@@ -45,6 +46,9 @@ public:
 	template<typename TLogicSolver,typename... TParameters>
 	void RegisterLogicSolver(TParameters... parameters);
 
+	template<typename TGUIPainter,typename... TParamaeters>
+	void RegisterGUIPainter(TParamaeters... parameters);
+
 	/// <summary>
 	/// Ticks the world
 	/// Calls the logic solver
@@ -71,12 +75,19 @@ public:
 	/// <param name="component"></param>
 	void RegisterLogicComponent(Component* component);
 private:
+	/// <summary>
+	/// Ticks the gui procedures
+	/// </summary>
+	void TickGUI();
+
 	Array<Entity*> m_Entities;
 	Array<Component*> m_LogicComponents;
 	Array<RenderableComponent*> m_RenderableComponents;
 	Array<ObserverComponent*> m_ObserverComponents;
+	Array<IGUIPainter*> m_GUIPainters;
 	IRenderer* m_Renderer;
 	ILogicSolver* m_LogicSolver;
+	ImGuiRenderer* m_GUIRenderer;
 };
 
 template<typename TRenderer, typename ...TParameters>

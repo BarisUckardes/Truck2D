@@ -2,11 +2,24 @@
 #include <LogicSolver/ILogicSolver.h>
 #include <Renderer/IRenderer.h>
 #include <World/Entity.h>
+#include <GUI/ImGuiRenderer.h>
+#include <GUI/IGUIPainter.h>
 World::World()
 {
+	/*
+	* Create imgui renderer
+	*/
+	m_GUIRenderer = new ImGuiRenderer(512,512);
+
+	/*
+	* Create imgui api
+	*/
+	m_GUIRenderer->CreateApi();
+
 }
 World::~World()
 {
+
 }
 Entity* World::CreateEntity()
 {
@@ -38,6 +51,11 @@ void World::TickWorld(const Window* window,float delta)
 	* Run renderer
 	*/
 	m_Renderer->Render(m_RenderableComponents, m_ObserverComponents,window);
+
+	/*
+	* Run gui renderer
+	*/
+	TickGUI();
 }
 
 void World::RegisterRenderable(RenderableComponent* component)
@@ -53,4 +71,24 @@ void World::RegisterObserver(ObserverComponent* component)
 void World::RegisterLogicComponent(Component* component)
 {
 	m_LogicComponents.Add(component);
+}
+
+void World::TickGUI()
+{
+	/*
+	* Start imgui frame
+	*/
+	m_GUIRenderer->NewFrame();
+
+	/*
+	* Execute gui painter objects
+	*/
+	for (unsigned int i = 0; i < m_GUIPainters.GetCursor(); i++)
+	{
+		m_GUIPainters[i]->OnGUIPaint();
+	}
+	/*
+	* Render imgui frame
+	*/
+	m_GUIRenderer->RenderFrame();
 }

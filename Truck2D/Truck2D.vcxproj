@@ -159,6 +159,8 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="src\GUI\IGUIPainter.cpp" />
+    <ClCompile Include="src\GUI\ImGuiRenderer.cpp" />
     <ClCompile Include="src\Renderer\Custom\ForwardRenderer.cpp" />
     <ClCompile Include="src\LogicSolver\Custom\IterativeLogicSolver.cpp" />
     <ClCompile Include="src\World\Components\ObserverComponent.cpp" />
@@ -176,6 +178,8 @@
     <ClCompile Include="src\Graphics\Texture\Texture2D.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="src\GUI\IGUIPainter.h" />
+    <ClInclude Include="src\GUI\ImGuiRenderer.h" />
     <ClInclude Include="src\Renderer\Custom\ForwardRenderer.h" />
     <ClInclude Include="src\LogicSolver\Custom\IterativeLogicSolver.h" />
     <ClInclude Include="src\Resources\Resources.h" />
