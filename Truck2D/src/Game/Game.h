@@ -1,4 +1,8 @@
 #pragma once
-
 class World;
-void create_default_game_scene(World& world);
+class ImGuiRenderer;
+
+/// <summary>
+/// Creates a default game scene for this assingment
+/// </summary>
+void create_default_game_scene(World& world,ImGuiRenderer* renderer);

@@ -19,6 +19,12 @@ public:
 	void SetClearColor(const glm::vec4& clearColor);
 
 	/// <summary>
+	/// Sets the aspect ratio for this observer component
+	/// </summary>
+	/// <param name="aspectRatio"></param>
+	void SetAspectRatio(float aspectRatio);
+
+	/// <summary>
 	/// Returns the view matrix
 	/// </summary>
 	/// <returns></returns>
@@ -49,5 +55,6 @@ public:
 private:
 	glm::vec4 m_ClearColor;
 	float m_OrthoSize;
+	float m_AspectRatio;
 };
 

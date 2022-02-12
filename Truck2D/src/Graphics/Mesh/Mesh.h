@@ -4,7 +4,7 @@
 #include <Memory/Array.h>
 
 /// <summary>
-/// Encapsulates opengl vertex array,buffer and index buffers
+/// Encapsulates OpenGL vertex array,buffer and index buffers
 /// Simple opengl implementation of a entire mesh
 /// </summary>
 class EXPORT Mesh

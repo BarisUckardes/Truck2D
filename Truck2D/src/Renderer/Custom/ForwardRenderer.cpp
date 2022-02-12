@@ -7,6 +7,7 @@
 #include <Graphics/Texture/Texture2D.h>
 #include <Window/Window.h>
 #include <GLAD/glad.h>
+#include <Core/Log.h>
 
 GPU_HANDLE _get_uniform_location(const GPU_HANDLE& programHandle,const String& name)
 {
@@ -14,6 +15,17 @@ GPU_HANDLE _get_uniform_location(const GPU_HANDLE& programHandle,const String& n
 }
 void ForwardRenderer::Render(Array<RenderableComponent*>& renderables, Array<ObserverComponent*>& observers, const Window* window)
 {
+	/*
+	* Disable depth test
+	*/
+	glDisable(GL_DEPTH_TEST);
+	glLineWidth(5.0f);
+
+	/*
+	* Set draw mode
+	*/
+	glPolygonMode(GL_FRONT, GetDrawMode());
+
 	/*
 	* Get window properties
 	*/
@@ -28,7 +40,12 @@ void ForwardRenderer::Render(Array<RenderableComponent*>& renderables, Array<Obs
 		/*
 		* Get observer
 		*/
-		const ObserverComponent* observer = observers[observerIndex];
+		ObserverComponent* observer = observers[observerIndex];
+
+		/*
+		* Set aspect ratio
+		*/
+		observer->SetAspectRatio(window->GetWidth() / (float)window->GetHeight());
 
 		/*
 		* Get observer properties
@@ -72,7 +89,8 @@ void ForwardRenderer::Render(Array<RenderableComponent*>& renderables, Array<Obs
 			* Get renderable properties
 			*/
 			const glm::mat4 modelMatrix = renderable->GetSpatial()->GetModelMatrix();
-			const glm::mat4 mvpMatrix = projectionMatrix * viewMatrix * modelMatrix;
+			const glm::mat4 mvpMatrix = projectionMatrix * viewMatrix*modelMatrix;
+			const glm::vec2 tiling = renderable->GetTiling();
 			const Mesh* mesh = renderable->GetMesh();
 			const ShaderProgram* program = renderable->GetProgram();
 			const Texture2D* spriteTexture = renderable->GetTexture();
@@ -103,6 +121,7 @@ void ForwardRenderer::Render(Array<RenderableComponent*>& renderables, Array<Obs
 			* Set uniform parameters
 			*/
 			glUniformMatrix4fv(_get_uniform_location(programHandle, "v_Mvp"), 1, GL_FALSE, &mvpMatrix[0][0]);
+			glUniform2fv(_get_uniform_location(programHandle, "f_Tiling"), 1, &tiling.x);
 			glActiveTexture(GL_TEXTURE0 + 0);
 			glBindTexture(GL_TEXTURE_2D, spriteTextureHandle);
 			glUniform1i(_get_uniform_location(programHandle, "f_SpriteTexture"), 0);

@@ -7,10 +7,17 @@ ObserverComponent::ObserverComponent(const glm::vec4& clearColor, float orthoSiz
 {
     m_ClearColor = clearColor;
     m_OrthoSize = orthoSize;
+    m_AspectRatio = 1.0f;
+
 }
 void ObserverComponent::SetClearColor(const glm::vec4& clearColor)
 {
     m_ClearColor = clearColor;
+}
+
+void ObserverComponent::SetAspectRatio(float aspectRatio)
+{
+    m_AspectRatio = aspectRatio;
 }
 
 glm::mat4 ObserverComponent::GetViewMatrix() const
@@ -21,7 +28,7 @@ glm::mat4 ObserverComponent::GetViewMatrix() const
 
 glm::mat4 ObserverComponent::GetProjectionMatrix() const
 {
-    return glm::ortho(-m_OrthoSize, m_OrthoSize, -m_OrthoSize, m_OrthoSize);
+    return glm::ortho(-m_OrthoSize*m_AspectRatio, m_OrthoSize* m_AspectRatio, -m_OrthoSize, m_OrthoSize, 0.001f, 1000.0f);
 }
 
 glm::vec4 ObserverComponent::GetClearColor() const
@@ -37,5 +44,9 @@ float ObserverComponent::GetOrthoSize() const
 void ObserverComponent::OnInitialize()
 {
     Component::OnInitialize();
+
+    /*
+    * Register itself to owner world's observer list
+    */
     GetOwnerEntity()->GetOwnerWorld()->RegisterObserver(this);
 }

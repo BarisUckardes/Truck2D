@@ -2,12 +2,10 @@
 #include <initializer_list>
 
 
-/*
-	* Definition
-	*/
+
 template <typename TValue>
 /// <summary>
-/// Basic rudy array implementation
+/// Basic array implementation useful throughtout this assingment
 /// </summary>
 /// <typeparam name="T"></typeparam>
 class Array

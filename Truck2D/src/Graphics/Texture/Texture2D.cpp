@@ -5,13 +5,31 @@
 
 Texture2D::Texture2D(const String& path)
 {
+    stbi_set_flip_vertically_on_load(true);
+
     /*
     * Load stbi data
     */
     int width;
     int height;
     int channels;
+    GPU_PARAMETER format;
+    GPU_PARAMETER internalFormat;
     Byte* data = stbi_load(*path, &width, &height, &channels, 0);
+
+    /*
+    * Select format
+    */
+    if (channels == 4)
+    {
+        format = GL_RGBA;
+        internalFormat = GL_RGBA32F;
+    }
+    else
+    {
+        format = GL_RGB;
+        internalFormat = GL_RGB32F;
+    }
 
     /*
     * Validate texture
@@ -36,7 +54,7 @@ Texture2D::Texture2D(const String& path)
     /*
     * Upload texture data
     */
-    glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA32F, width, height, 0, GL_RGBA, GL_UNSIGNED_BYTE, data);
+    glTexImage2D(GL_TEXTURE_2D, 0, internalFormat, width, height, 0, format, GL_UNSIGNED_BYTE, data);
     glBindTexture(GL_TEXTURE_2D, 0);
 
     /*
@@ -45,7 +63,7 @@ Texture2D::Texture2D(const String& path)
     m_TextureHandle = textureHandle;
 
     /*
-    * Delete intermediate texture buffer
+    * Delete intermediate stbi texture buffer
     */
     delete data;
 }

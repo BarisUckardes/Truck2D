@@ -8,6 +8,11 @@
 class EXPORT Texture2D
 {
 public:
+	/// <summary>
+	/// Single constructor to load texture from path
+	/// <para>Loading and updating from a byte array is not allowed nor needed in this assingment</para>
+	/// </summary>
+	/// <param name="path"></param>
 	Texture2D(const String& path);
 	~Texture2D();
 

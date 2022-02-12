@@ -35,7 +35,7 @@ public:
 	/// <typeparam name="...TParameters"></typeparam>
 	/// <param name="...parameters"></param>
 	template<typename TRenderer,typename... TParameters>
-	void RegisterRenderer(TParameters... parameters);
+	TRenderer* RegisterRenderer(TParameters... parameters);
 
 	/// <summary>
 	/// Registers a custom logic solver via template type
@@ -44,10 +44,8 @@ public:
 	/// <typeparam name="...TParameters"></typeparam>
 	/// <param name="...parameters"></param>
 	template<typename TLogicSolver,typename... TParameters>
-	void RegisterLogicSolver(TParameters... parameters);
+	TLogicSolver* RegisterLogicSolver(TParameters... parameters);
 
-	template<typename TGUIPainter,typename... TParamaeters>
-	void RegisterGUIPainter(TParamaeters... parameters);
 
 	/// <summary>
 	/// Ticks the world
@@ -75,29 +73,26 @@ public:
 	/// <param name="component"></param>
 	void RegisterLogicComponent(Component* component);
 private:
-	/// <summary>
-	/// Ticks the gui procedures
-	/// </summary>
-	void TickGUI();
 
 	Array<Entity*> m_Entities;
 	Array<Component*> m_LogicComponents;
 	Array<RenderableComponent*> m_RenderableComponents;
 	Array<ObserverComponent*> m_ObserverComponents;
-	Array<IGUIPainter*> m_GUIPainters;
 	IRenderer* m_Renderer;
 	ILogicSolver* m_LogicSolver;
-	ImGuiRenderer* m_GUIRenderer;
 };
 
 template<typename TRenderer, typename ...TParameters>
-inline void World::RegisterRenderer(TParameters ...parameters)
+inline TRenderer* World::RegisterRenderer(TParameters ...parameters)
 {
 	m_Renderer = new TRenderer(parameters...);
+	return (TRenderer*)m_Renderer;
+
 }
 
 template<typename TLogicSolver, typename ...TParameters>
-inline void World::RegisterLogicSolver(TParameters ...parameters)
+inline TLogicSolver* World::RegisterLogicSolver(TParameters ...parameters)
 {
 	m_LogicSolver = new TLogicSolver(parameters...);
+	return (TLogicSolver*)m_LogicSolver;
 }

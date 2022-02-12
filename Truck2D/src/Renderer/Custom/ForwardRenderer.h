@@ -1,6 +1,10 @@
 #pragma once
 #include <Renderer/IRenderer.h>
 
+/// <summary>
+/// Simple forward rendering pipeline implementation
+/// Iterates renderable objects and draws them by their order (Painting rule)
+/// </summary>
 class ForwardRenderer : public IRenderer
 {
 public:

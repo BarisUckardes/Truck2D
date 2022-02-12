@@ -63,5 +63,5 @@ GPU_HANDLE Mesh::GetIndexBufferHandle() const
 
 unsigned int Mesh::GetIndexCount() const
 {
-    return 0;
+    return m_IndexCount;
 }

@@ -2,6 +2,10 @@
 #include <Core/Log.h>
 #include <GLAD/glad.h>
 
+/// <summary>
+/// Helper function which validates shader compilation stage
+/// </summary>
+/// <param name="shaderID"></param>
 void _validate_shader(GPU_HANDLE shaderID)
 {
 	GLint state = 0;
@@ -49,6 +53,11 @@ ShaderProgram::ShaderProgram(const String& vertexSource, const String& fragmentS
 	glAttachShader(programHandle, vertexShaderHandle);
 	glAttachShader(programHandle, fragmentShaderHandle);
 	glLinkProgram(programHandle);
+
+	/*
+	* Initialize program members
+	*/
+	m_ProgramHandle = programHandle;
 
 }
 

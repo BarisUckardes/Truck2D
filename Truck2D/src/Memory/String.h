@@ -3,7 +3,7 @@
 
 
 /// <summary>
-/// Basic string implementation
+/// Basic string implementation useful throughout this assignment
 /// </summary>
 class EXPORT String
 {

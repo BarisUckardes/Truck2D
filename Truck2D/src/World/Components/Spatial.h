@@ -9,7 +9,7 @@
 class EXPORT Spatial : public Component
 {
 public:
-	Spatial() = default;
+	Spatial();
 	~Spatial() = default;
 
 	virtual bool ShouldTick() const override { return false; }
@@ -41,6 +41,13 @@ public:
 	/// <returns></returns>
 	FORCEINLINE glm::vec3 GetScale() const;
 
+
+	/// <summary>
+	/// Sets the anchor position
+	/// </summary>
+	/// <param name="anchor"></param>
+	void SetAnchor(const glm::vec3& anchor);
+
 	/// <summary>
 	/// Sets the entity position
 	/// </summary>
@@ -62,5 +69,6 @@ private:
 	glm::vec3 m_Position;
 	glm::vec3 m_Rotation;
 	glm::vec3 m_Scale;
+	glm::vec3 m_Anchor;
 };
 
